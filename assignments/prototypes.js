@@ -112,6 +112,19 @@
   - Babies should have the ability to play, which persons don't.
   - By playing, a string is returned with some text of your choosing.
 
+  */
+
+  function Baby(name, age) {
+    Person.call(this, name, age)
+  }
+
+  Baby.prototype = Object.create(Person.prototype);
+
+  Baby.prototype.play = function () { return `I can play, even though I am ${this.age} years old...`}
+
+  var mine = new Baby('Mine', 2)
+
+/*
   TASK 4
 
   Use your imagination and come up with constructors that allow to build objects
