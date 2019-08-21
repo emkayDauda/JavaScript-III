@@ -15,6 +15,13 @@
 // Principle 1
 
 // code example for Window Binding
+var theWindowName = "Woop woop"
+
+function theWindowCall(){
+    //theWindowName variable is accessible because it exists within the global scope.
+    console.log(this.theWindowName)
+    return this;
+}
 
 // Principle 2
 
