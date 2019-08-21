@@ -27,6 +27,15 @@ function theWindowCall(){
 
 // code example for Implicit Binding
 
+let thisObjectOfMine = {
+    theNameHere: "aSweetSweetName",
+    showYourself: function () {
+        // We see here, that this refers to the `thisObjectOfMine` object and we can then access variables (state) within 'thisObjectOfMine' using the 'this' keyword.
+        console.log(`Welp, my name is ${this.theNameHere}`)
+        return this;
+    },
+}
+
 // Principle 3
 
 // code example for New Binding
