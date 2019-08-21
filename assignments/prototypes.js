@@ -44,8 +44,33 @@
   - Give persons the ability to eat edibles.
   - When eating an edible, it should be pushed into a "stomach" property which is an array.
   - Give persons the ability to poop.
-  - When pooping, the stomach should empty.
+  - When pooping, the stomach should empty. */
 
+  function Person(name, age){
+    this.name = name;
+    this.age = age;
+    this.stomach = [];
+  }
+
+  Person.prototype.eatEdible = function (stuff) {
+    this.stomach.push(stuff);
+  }
+
+  Person.prototype.poop = function () {
+    this.stomach = [];
+  }
+
+  const emkay = new Person('Maaruf', 23);
+
+  console.log(`${emkay.name} is currently ${emkay.age} yo`)
+  emkay.eatEdible('Pizza')
+
+  console.log(emkay)
+
+  emkay.poop()
+
+  console.log(emkay)
+/*
   TASK 2
 
   - Build a Car constructor that takes model name and make.
