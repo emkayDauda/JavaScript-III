@@ -40,6 +40,13 @@ let thisObjectOfMine = {
 
 // code example for New Binding
 
+function Animal(name, type){
+    this.name = name;
+    this.type = type;
+}
+
+let scooby = Animal('Scooby', 'Dog');
+
 // Principle 4
 
 // code example for Explicit Binding
