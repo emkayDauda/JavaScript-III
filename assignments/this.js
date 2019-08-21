@@ -50,3 +50,16 @@ let scooby = Animal('Scooby', 'Dog');
 // Principle 4
 
 // code example for Explicit Binding
+
+//First, we define a function, and log what `this` is. We see that it refers to the Window scope...
+function aScope(who, what){
+    console.log(this)
+    return `${who} did ${what}`
+}
+aScope('She', 'those')
+//Here, we assign a new variable(?) to the `this` for function aScope by calling 'call'. We also see in the console, that this becomes the string supplied. At first, this refered to the window.
+aScope.call('aNewScope', 'She', 'it')
+
+
+// Here, we see that 'this' becomes the string 'aNewerScope'
+var aCopy = aScope.bind('aNewerScope')
