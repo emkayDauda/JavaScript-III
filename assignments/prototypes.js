@@ -79,8 +79,32 @@
   - Give cars the ability to crash.
   - A crashed car can't be driven any more. Attempts return a string "I crashed at x miles!", x being the miles in the odometer.
   - Give cars the ability to be repaired.
-  - A repaired car can be driven again.
+  - A repaired car can be driven again. */
 
+  function Car(model, make){
+    this.model = model;
+    this.make = make;
+    this.odometer = 0;
+    this.crashed = false;
+  }
+
+  Car.prototype.drive = function (distance) {
+    if(this.crashed)
+      return `I crashed at ${this.odometer} miles!`
+    this.odometer += Number(distance)
+    return `Vroom vroom, we at ${this.odometer} miles now, baby!`;
+  }
+
+  Car.prototype.crash = function () {
+    this.crashed = true;
+  }
+
+  Car.prototype.repair = function () { this.crashed = false; }
+
+  var aCar = new Car('YC', 'BMW');
+
+
+  /*
   TASK 3
 
   - Build a Baby constructor that subclasses the Person built earlier.
