@@ -44,8 +44,33 @@
   - Give persons the ability to eat edibles.
   - When eating an edible, it should be pushed into a "stomach" property which is an array.
   - Give persons the ability to poop.
-  - When pooping, the stomach should empty.
+  - When pooping, the stomach should empty. */
 
+  function Person(name, age){
+    this.name = name;
+    this.age = age;
+    this.stomach = [];
+  }
+
+  Person.prototype.eatEdible = function (stuff) {
+    this.stomach.push(stuff);
+  }
+
+  Person.prototype.poop = function () {
+    this.stomach = [];
+  }
+
+  const emkay = new Person('Maaruf', 23);
+
+  console.log(`${emkay.name} is currently ${emkay.age} yo`)
+  emkay.eatEdible('Pizza')
+
+  console.log(emkay)
+
+  emkay.poop()
+
+  console.log(emkay)
+/*
   TASK 2
 
   - Build a Car constructor that takes model name and make.
@@ -54,8 +79,32 @@
   - Give cars the ability to crash.
   - A crashed car can't be driven any more. Attempts return a string "I crashed at x miles!", x being the miles in the odometer.
   - Give cars the ability to be repaired.
-  - A repaired car can be driven again.
+  - A repaired car can be driven again. */
 
+  function Car(model, make){
+    this.model = model;
+    this.make = make;
+    this.odometer = 0;
+    this.crashed = false;
+  }
+
+  Car.prototype.drive = function (distance) {
+    if(this.crashed)
+      return `I crashed at ${this.odometer} miles!`
+    this.odometer += Number(distance)
+    return `Vroom vroom, we at ${this.odometer} miles now, baby!`;
+  }
+
+  Car.prototype.crash = function () {
+    this.crashed = true;
+  }
+
+  Car.prototype.repair = function () { this.crashed = false; }
+
+  var aCar = new Car('YC', 'BMW');
+
+
+  /*
   TASK 3
 
   - Build a Baby constructor that subclasses the Person built earlier.
@@ -63,6 +112,19 @@
   - Babies should have the ability to play, which persons don't.
   - By playing, a string is returned with some text of your choosing.
 
+  */
+
+  function Baby(name, age) {
+    Person.call(this, name, age)
+  }
+
+  Baby.prototype = Object.create(Person.prototype);
+
+  Baby.prototype.play = function () { return `I can play, even though I am ${this.age} years old...`}
+
+  var mine = new Baby('Mine', 2)
+
+/*
   TASK 4
 
   Use your imagination and come up with constructors that allow to build objects
@@ -70,6 +132,36 @@
   complicated one with lots of state. Surprise us!
 
 */
+
+function Student(name, age, id, gender){
+  this.name = name;
+  this.age = age;
+  this.id = id;
+  this.gender = gender;
+  this.isAcing = true;
+  this.future = 'still bright'
+  this.classesSkipped = 0;
+}
+
+Student.prototype.skipClass = function (number) {
+  this.classesSkipped += Number(number);
+  if(this.classesSkipped >= 15) {
+    this.isAcing = false;
+    this.future = 'really dim right now, SMH';
+  }
+  else if(this.classesSkipped >= 11) {
+    this.isAcing = false;
+    this.future = 'currently dim';
+  }
+    return `You have skipped ${this.classesSkipped} classes and your future is ${this.future}`
+}
+
+Student.prototype.turnANewLeaf = function () {
+  this.classesSkipped = 0;
+  return `Huh... Who knew ${this.name} could ever attend make up classes...`
+}
+
+var Usman = new Student('Usman', 24, '131869', 'M');
 
 /*
 
@@ -90,12 +182,28 @@
   * destroy() // prototype method that returns: `${this.name} was removed from the game.`
 */
 
+function GameObject(createdAt, name, dimensions){
+  this.createdAt = createdAt;
+  this.name = name;
+  this.dimensions = dimensions;
+}
+
+GameObject.prototype.destroy = function () { return `${this.name} was removed from the game` }
+
 /*
   === CharacterStats ===
   * healthPoints
   * takeDamage() // prototype method -> returns the string '<object name> took damage.'
   * should inherit destroy() from GameObject's prototype
 */
+
+function CharacterStats(createdAt, name, dimensions, healthPoints){
+  GameObject.call(this, createdAt, name, dimensions);
+  this.healthPoints = healthPoints;
+}
+
+CharacterStats.prototype = Object.create(GameObject.prototype);
+CharacterStats.prototype.takeDamage = function () { return `${this.name} took damage.`}
 
 /*
   === Humanoid (Having an appearance or character resembling that of a human.) ===
@@ -107,6 +215,16 @@
   * should inherit takeDamage() from CharacterStats
 */
 
+function Humanoid(createdAt, name, dimensions,healthPoints,team, weapons, language) {
+  CharacterStats.call(this, createdAt, name, dimensions, healthPoints);
+  this.team = team;
+  this.weapons = weapons;
+  this.language = language;
+}
+
+Humanoid.prototype = Object.create(CharacterStats.prototype);
+Humanoid.prototype.greet = function () { return `${this.name} offers a greeting in ${this.language}.`}
+
 /*
   * Inheritance chain: GameObject -> CharacterStats -> Humanoid
   * Instances of Humanoid should have all of the same properties as CharacterStats and GameObject.
@@ -115,7 +233,7 @@
 
 // Test you work by un-commenting these 3 objects and the list of console logs below:
 
-/*
+
   const mage = new Humanoid({
     createdAt: new Date(),
     dimensions: {
@@ -173,4 +291,4 @@
   console.log(archer.greet()); // Lilith offers a greeting in Elvish.
   console.log(mage.takeDamage()); // Bruce took damage.
   console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
-*/
+
